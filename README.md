@@ -30,7 +30,7 @@ Enter command
 The screen should display `ready on http://0.0.0.0:8000`. Yes server is running.
 
 <p align="center">
-    <img src="https://imgur.com/undefined.png" alt="drawing" />
+    <img src="https://imgur.com/g4XoZ78.png" alt="drawing" />
 </p>
 
 
