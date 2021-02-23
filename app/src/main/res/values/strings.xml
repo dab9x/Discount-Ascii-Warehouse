@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Discount Ascii Warehouse</string>
+    <string name="title_name">Discount\nAscii Warehouse</string>
+    <string name="popular_purchases">Popular Purchases</string>
+    <string name="list_product">List Product</string>
+    <string name="user_purchases">User Purchases</string>
+    <string name="not_found_user">Not found user</string>
+    <string name="product_purchase">Product Purchase</string>
+    <string name="product_information">Product Information</string>
+    <string name="close">Close</string>
+    <string name="search_user_purchase">Search user purchase</string>
+    <string name="not_found_product">Not found product</string>
+</resources>
