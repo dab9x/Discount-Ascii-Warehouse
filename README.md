@@ -30,7 +30,7 @@ Enter command
 The screen should display `ready on http://0.0.0.0:8000`. Yes server is running.
 
 <p align="center">
-    <img src="https://imgur.com/undefined" alt="drawing" />
+    <img src="https://imgur.com/undefined.png" alt="drawing" />
 </p>
 
 
@@ -46,14 +46,14 @@ Config Proxy for Emulator to API working
 - `Port: 8000`
 
 <p align="center">
-    <img src="https://imgur.com/TsWdWBp" alt="drawing" />
+    <img src="https://imgur.com/TsWdWBp.png" alt="drawing" />
 </p>
 
 Run app 
 
 <p align="center">
-    <img src="https://imgur.com/pL2qC88" alt="drawing"   width="170"/>
-    <img src="https://imgur.com/rx8g0vr" alt="drawing"   width="170"/>
-    <img src="https://imgur.com/aNc39Pd" alt="drawing"   width="170"/>
-    <img src="https://imgur.com/fRWQFD3" alt="drawing"   width="170"/>
+    <img src="https://imgur.com/pL2qC88.png" alt="drawing"   width="170"/>
+    <img src="https://imgur.com/rx8g0vr.png" alt="drawing"   width="170"/>
+    <img src="https://imgur.com/aNc39Pd.png" alt="drawing"   width="170"/>
+    <img src="https://imgur.com/fRWQFD3.png" alt="drawing"   width="170"/>
 </p>
