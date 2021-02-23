@@ -10,7 +10,7 @@ A mobile application for exploring the Discount Ascii Warehouse ecommerce platfo
 
 ## Setup
 
-# 1. Server
+### 1. Server
 
 Clone project [Discount-Ascii-Warehouse](https://github.com/dab9x/Discount-Ascii-Warehouse.git)
 
@@ -34,7 +34,7 @@ The screen should display `ready on http://0.0.0.0:8000`. Yes server is running.
 </p>
 
 
-# 2. Client (Android Project)
+### 2. Client (Android Project)
 
 Import project [Discount-Ascii-Warehouse](https://github.com/dab9x/Discount-Ascii-Warehouse.git) in [Android Studio](https://developer.android.com/)
 
