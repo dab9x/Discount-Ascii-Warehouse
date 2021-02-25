@@ -118,7 +118,7 @@ class UsersPurchaseViewModel @Inject constructor(
         }
     }
 
-    private suspend fun fetchProductsDetail(purchases: Iterable<Purchase>): List<Product> =
+    public suspend fun fetchProductsDetail(purchases: Iterable<Purchase>): List<Product> =
         withContext(Dispatchers.IO) {
             val products = mutableListOf<Product>()
             purchases.forEach { purchase ->
@@ -137,7 +137,7 @@ class UsersPurchaseViewModel @Inject constructor(
             return@withContext products
         }
 
-    private suspend fun fetchProductsWithUser(products: Iterable<Product>): List<Product> =
+    public suspend fun fetchProductsWithUser(products: Iterable<Product>): List<Product> =
         withContext(Dispatchers.IO) {
             val productItems = mutableListOf<Product>()
             products.forEach { product ->

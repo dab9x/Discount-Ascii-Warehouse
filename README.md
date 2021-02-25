@@ -5,7 +5,7 @@ A mobile application for exploring the Discount Ascii Warehouse ecommerce platfo
 ## Architecture Components
 
 - Server NodeJs
-- MVVM Pattern
+- MVVM Architecture
 - Language Kotlin on Android platform
 - Using Kotlin Coroutines, Hilt DI, Navigation, Retrofit, Lifecycle(ViewModel, LiveData)
 
