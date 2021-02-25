@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/userFragment">
+
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.dab.discountascii.ui.fragment.UserFragment"
+        android:label="List Users"
+        tools:layout="@layout/users_fragment">
+        <action
+            android:id="@+id/action_userFragment_to_userPurchaseFragment"
+            app:destination="@id/userPurchaseFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/userPurchaseFragment"
+        android:name="com.dab.discountascii.ui.fragment.UserPurchaseFragment"
+        android:label="List Products"
+        tools:layout="@layout/user_purchase_fragment" />
+</navigation>

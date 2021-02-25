@@ -6,7 +6,7 @@
 
         <variable
             name="user"
-            type="com.dab.discountascii.model.User" />
+            type="com.dab.discountascii.data.entities.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

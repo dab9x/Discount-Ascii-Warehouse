@@ -5,9 +5,9 @@
 
         <variable
             name="product"
-            type="com.dab.discountascii.model.Product" />
+            type="com.dab.discountascii.data.entities.Product" />
 
-        <import type="java.util.List"/>
+        <import type="java.util.List" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,11 +24,11 @@
             android:background="@color/purple_200"
             android:gravity="center"
             android:padding="@dimen/dimen_10dp"
+            android:text="@string/product_information"
             android:textAllCaps="true"
             android:textColor="@color/c_text"
             android:textSize="@dimen/dimen_18sp"
             android:textStyle="bold"
-            android:text="@string/product_information"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,10 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_16dp"
+            android:text="@{`Name: ` + product.face}"
             android:textColor="@color/c_title"
             android:textSize="@dimen/dimen_18sp"
             android:textStyle="bold"
-            android:text="@{`Name: ` + product.face}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
@@ -52,10 +52,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_16dp"
+            android:text="@{`Price: ` + product.price + `$`}"
             android:textColor="@color/c_title"
             android:textSize="@dimen/dimen_14sp"
             android:textStyle="bold"
-            android:text="@{`Price: ` + product.price + `$`}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
@@ -66,10 +66,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_16dp"
+            android:text="@{`Size: ` + product.size}"
             android:textColor="@color/c_title"
             android:textSize="@dimen/dimen_14sp"
             android:textStyle="bold"
-            android:text="@{`Size: ` + product.size}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_price"
@@ -80,10 +80,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_16dp"
+            android:text="@{product.recent.size() > 0 ? (`Recent Purchase: ` + product.recent) : (`Recent Purchase: No purchase`)}"
             android:textColor="@color/c_title"
             android:textSize="@dimen/dimen_14sp"
             android:textStyle="bold"
-            android:text="@{product.recent.size() > 0 ? (`Recent Purchase: ` + product.recent) : (`Recent Purchase: No purchase`)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_size"
@@ -96,11 +96,11 @@
             android:background="@color/c_sub_title"
             android:gravity="center"
             android:padding="@dimen/dimen_10dp"
+            android:text="@string/close"
             android:textAllCaps="true"
             android:textColor="@color/c_text"
             android:textSize="@dimen/dimen_18sp"
             android:textStyle="bold"
-            android:text="@string/close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_recent" />

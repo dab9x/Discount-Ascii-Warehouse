@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nsv_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_title_popular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_8dp"
+                        android:padding="@dimen/dimen_10dp"
+                        android:text="@string/popular_purchases"
+                        android:textAllCaps="true"
+                        android:textColor="@color/c_title"
+                        android:textSize="@dimen/dimen_16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_popular"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/tv_title_popular"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_no_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_title_popular"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/dimen_8dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:padding="@dimen/dimen_10dp"
+                        android:text="@string/not_found_product"
+                        android:textColor="@color/c_title"
+                        android:textSize="@dimen/dimen_14sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_title_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rcv_popular"
+                        android:layout_marginStart="@dimen/dimen_8dp"
+                        android:layout_marginTop="20dp"
+                        android:padding="@dimen/dimen_10dp"
+                        android:text="@string/list_product"
+                        android:textAllCaps="true"
+                        android:textColor="@color/c_title"
+                        android:textSize="@dimen/dimen_16sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/tv_title_product"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_no_data_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_title_product"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="@dimen/dimen_8dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:padding="@dimen/dimen_10dp"
+                        android:text="@string/not_found_product"
+                        android:textColor="@color/c_title"
+                        android:textSize="@dimen/dimen_14sp" />
+
+
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
