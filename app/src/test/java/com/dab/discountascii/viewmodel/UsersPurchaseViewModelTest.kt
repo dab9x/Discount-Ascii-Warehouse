@@ -66,10 +66,6 @@ class UsersPurchaseViewModelTest {
                 purchaseUsersFromApi.data?.purchases?.let {
                     allPurchasesFromApi.addAll(it)
                 }
-
-                val productsDetail =
-                    viewModel.fetchProductsDetail(allPurchasesFromApi.asIterable())
-                verify(viewModel.fetchProductsWithUser(productsDetail.asIterable()))
             }
             verify(apiProductsObserver).onChanged(Resource.success(emptyList()))
             viewModel.getProducts().removeObserver(apiProductsObserver)
@@ -97,10 +93,6 @@ class UsersPurchaseViewModelTest {
                 purchaseUsersFromApi.data?.purchases?.let {
                     allPurchasesFromApi.addAll(it)
                 }
-
-                val productsDetail =
-                    viewModel.fetchProductsDetail(allPurchasesFromApi.asIterable())
-                verify(viewModel.fetchProductsWithUser(productsDetail.asIterable()))
             }
 
             verify(apiProductsObserver).onChanged(

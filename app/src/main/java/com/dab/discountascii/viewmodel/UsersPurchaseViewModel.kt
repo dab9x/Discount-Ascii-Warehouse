@@ -3,6 +3,7 @@ package com.dab.discountascii.viewmodel
 import androidx.lifecycle.*
 import com.dab.discountascii.data.entities.Product
 import com.dab.discountascii.data.entities.Purchase
+import com.dab.discountascii.data.entities.ResponsePurchases
 import com.dab.discountascii.data.repository.AppRepository
 import com.dab.discountascii.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,12 +30,6 @@ class UsersPurchaseViewModel @Inject constructor(
         super.onCleared()
     }
 
-    init {
-        _username = MutableLiveData<String>()
-        fetchProducts()
-        fetchProductsPopular()
-    }
-
     fun getProducts(): LiveData<Resource<List<Product>>> {
         return products
     }
@@ -48,9 +43,19 @@ class UsersPurchaseViewModel @Inject constructor(
             products.postValue(Resource.loading())
             try {
                 coroutineScope {
+
+                    val purchaseUsersFromApi: Resource<ResponsePurchases>?
+
                     val purchaseUsersFromApiDeferred =
                         viewModelScope.async { repository.getPurchasesUser(_username.value!!) }
-                    val purchaseUsersFromApi = purchaseUsersFromApiDeferred.await()
+
+                    try {
+                        purchaseUsersFromApi = purchaseUsersFromApiDeferred.await()
+                    } catch (ex: Exception) {
+                        val message = ex.toString()
+                        products.postValue(Resource.error(message))
+                        return@coroutineScope
+                    }
 
                     val allPurchasesFromApi = mutableListOf<Purchase>()
 
@@ -59,11 +64,28 @@ class UsersPurchaseViewModel @Inject constructor(
                             allPurchasesFromApi.addAll(it)
                         }
 
-                        val productsDetail =
-                            fetchProductsDetail(allPurchasesFromApi.asIterable())
-                        val productsUser = fetchProductsWithUser(productsDetail.asIterable())
+                        coroutineScope {
+                            val productsDetail: List<Product>?
+                            val productsUserRecent: Map<String, List<String>>?
 
-                        products.postValue(Resource.success(productsUser))
+                            val productsDetailDeferred = viewModelScope.async {
+                                fetchProductsDetail(allPurchasesFromApi.asIterable())
+                            }
+                            val productsUserRecentDeferred = viewModelScope.async {
+                                fetchProductsWithUserPurchaseRecent(allPurchasesFromApi.asIterable())
+                            }
+
+                            try {
+                                productsDetail = productsDetailDeferred.await()
+                                productsUserRecent = productsUserRecentDeferred.await()
+                            } catch (ex: Exception) {
+                                val message = ex.toString()
+                                products.postValue(Resource.error(message))
+                                return@coroutineScope
+                            }
+
+                            processData(false, productsDetail, productsUserRecent)
+                        }
                     } else if (purchaseUsersFromApi.status == Resource.Status.ERROR) {
                         var message = "Oops! An error occurred. Please try again later"
                         purchaseUsersFromApi.message?.let {
@@ -78,7 +100,7 @@ class UsersPurchaseViewModel @Inject constructor(
         }
     }
 
-    fun fetchProductsPopular() {
+    fun fetchProductsPopular () {
         viewModelScope.launch {
             productsPopular.postValue(Resource.loading())
             try {
@@ -98,12 +120,19 @@ class UsersPurchaseViewModel @Inject constructor(
                         purchaseUsersFromApi.data?.purchases?.let {
                             allPurchasesFromApi.addAll(it)
                         }
+                        coroutineScope {
+                            val productsDetailDeferred = viewModelScope.async {
+                                fetchProductsDetail(allPurchasesFromApi.asIterable())
+                            }
+                            val productsUserRecentDeferred = viewModelScope.async {
+                                fetchProductsWithUserPurchaseRecent(allPurchasesFromApi.asIterable())
+                            }
 
-                        val productsDetail =
-                            fetchProductsDetail(allPurchasesFromApi.asIterable())
-                        val productsUser = fetchProductsWithUser(productsDetail.asIterable())
+                            val productsDetail = productsDetailDeferred.await()
+                            val productsUserRecent = productsUserRecentDeferred.await()
 
-                        productsPopular.postValue(Resource.success(productsUser))
+                            processData(true, productsDetail, productsUserRecent)
+                        }
                     } else if (purchaseUsersFromApi.status == Resource.Status.ERROR) {
                         var message = "Oops! An error occurred. Please try again later"
                         purchaseUsersFromApi.message?.let {
@@ -118,7 +147,21 @@ class UsersPurchaseViewModel @Inject constructor(
         }
     }
 
-    public suspend fun fetchProductsDetail(purchases: Iterable<Purchase>): List<Product> =
+    private fun processData(isPopular: Boolean, productDetails: List<Product>, userRecent: Map<String, List<String>>) {
+        val productsResult = ArrayList<Product>()
+
+        for (product in productDetails) {
+            product.recent = userRecent[(product.id).toString()]!!
+            productsResult.add(product)
+        }
+
+        if (isPopular)
+            productsPopular.postValue(Resource.success(productsResult))
+        else
+            products.postValue(Resource.success(productsResult))
+    }
+
+    suspend fun fetchProductsDetail(purchases: Iterable<Purchase>): List<Product> =
         withContext(Dispatchers.IO) {
             val products = mutableListOf<Product>()
             purchases.forEach { purchase ->
@@ -137,33 +180,30 @@ class UsersPurchaseViewModel @Inject constructor(
             return@withContext products
         }
 
-    public suspend fun fetchProductsWithUser(products: Iterable<Product>): List<Product> =
+    private suspend fun fetchProductsWithUserPurchaseRecent(purchases: Iterable<Purchase>): Map<String, List<String>> =
         withContext(Dispatchers.IO) {
-            val productItems = mutableListOf<Product>()
-            products.forEach { product ->
+            val productItems = hashMapOf<String, List<String>>()
+            purchases.forEach { purchase ->
                 coroutineScope {
                     val purchaseProductFromApiDeferred =
-                        viewModelScope.async { repository.getPurchasesProduct(product.id) }
+                        viewModelScope.async { repository.getPurchasesProduct(purchase.productId) }
                     val purchaseProductFromApi = purchaseProductFromApiDeferred.await()
 
                     if (purchaseProductFromApi.status == Resource.Status.SUCCESS) {
                         purchaseProductFromApi.data?.purchases?.let {
-                            val productUpdated: Product = product
                             val listRecent = ArrayList<String>()
-                            for (purchase in it) {
-                                if (!listRecent.contains(purchase.username)) {
-                                    listRecent.add(purchase.username)
+                            for (item in it) {
+                                if (!listRecent.contains(item.username)) {
+                                    listRecent.add(item.username)
                                 }
                             }
-                            productUpdated.recent = listRecent
-                            productItems.add(productUpdated)
+                            productItems.put((purchase.productId).toString(), listRecent)
                         }
                     }
                 }
             }
             return@withContext productItems
         }
-
 
     fun start(username: String) {
         _username.value = username
